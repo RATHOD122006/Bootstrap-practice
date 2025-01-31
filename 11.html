@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">       
         <div class="container-fluid">
             <a class="navbar-brand" href="#">BrandName</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,11 +159,12 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <img src="https://www.shutterstock.com/image-photo/mens-boots-crazy-horse-leather-260nw-1131785708.jpg" class="card-img-top" alt="Product 1" >
+                    <img src="https://www.shutterstock.com/image-photo/mens-boots-crazy-horse-leather-260nw-1131785708.jpg" class="card-img-top" alt="Product 1">
                     <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
+                        <h5 class="card-title">SHOES 1</h5>
                         <p class="card-text">This is a great product for your needs.</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
+                        <h5 class="card-title">$40.00</h5>
+                        <button class="btn btn-primary add-to-cart" data-name="SHOES 1" data-price="40.00">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -171,9 +172,10 @@
                 <div class="card">
                     <img src="https://agrashoemart.com/wp-content/uploads/2024/02/DSC_5354-1024x769.jpg" class="card-img-top" alt="Product 2">
                     <div class="card-body">
-                        <h5 class="card-title">Product 2</h5>
+                        <h5 class="card-title">SHOES 2</h5>
                         <p class="card-text">A premium product with excellent quality.</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
+                        <h5 class="card-title">$36.96</h5>
+                        <button class="btn btn-primary add-to-cart" data-name="SHOES 2" data-price="36.96">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -181,9 +183,10 @@
                 <div class="card">
                     <img src="https://4.imimg.com/data4/HO/XM/MY-25191941/boot-shoes--500x500.jpg" class="card-img-top" alt="Product 3">
                     <div class="card-body">
-                        <h5 class="card-title">Product 3</h5>
+                        <h5 class="card-title">SHOES 3</h5>
                         <p class="card-text">Reliable and affordable for everyone.</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
+                        <h5 class="card-title">$45.78</h5>
+                        <button class="btn btn-primary add-to-cart" data-name="SHOES 3" data-price="45.78">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -197,8 +200,9 @@
                 <div class="card mb-4">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTESZ9QfbyDqFSDXCo__-DfTEEl2KqDCyZOTg&s" class="card-img-top" alt="Blog 1">
                     <div class="card-body">
-                        <h5 class="card-title">Blog Post 1</h5>
+                        <h5 class="card-title">LATEST SHOES 1</h5>
                         <p class="card-text">A brief introduction to our latest blog post.</p>
+                        <h5 class="card-title">PRICE $700.60</h5>
                         <a href="#" class="btn btn-secondary">Read More</a>
                     </div>
                 </div>
@@ -207,14 +211,36 @@
                 <div class="card mb-4">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6FI62OTB4kXaJZc_iLjXchVs2j16zfU_Zw&s "  class="card-img-top" alt="Blog 2" >
                     <div class="card-body">
-                        <h5 class="card-title">Blog Post 2</h5>
+                        <h5 class="card-title">LATEST SHOES 2</h5>
                         <p class="card-text">Explore insights and trends in our latest article.</p>
+                        <h5 class="card-title">PRICE $582.99</h5>
                         <a href="#" class="btn btn-secondary">Read More</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container mt-5" id="cart">
+        <h2 class="text-center">Shopping Cart</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <tr>
+                    <td colspan="5" class="text-center">Your cart is empty</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4 class="text-end">Total: $<span id="cart-total">0.00</span></h4>
+    </div>
+    
 
     <script>
         function validateLogin() {
@@ -250,6 +276,50 @@
             }
 
             return true;
+        }
+        let cart = [];
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function () {
+                const name = this.getAttribute('data-name');
+                const price = parseFloat(this.getAttribute('data-price'));
+                
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ name, price, quantity: 1 });
+                }
+                updateCart();
+            });
+        });
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                cartItems.innerHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>${item.quantity}</td>
+                        <td>$${itemTotal.toFixed(2)}</td>
+                        <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
+                    </tr>
+                `;
+            });
+            document.getElementById('cart-total').textContent = total.toFixed(2);
+            document.getElementById('cart-count').textContent = cart.length;
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<tr><td colspan="5" class="text-center">Your cart is empty</td></tr>';
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
         }
     </script>
 
