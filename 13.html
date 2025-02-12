@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark p-3">
+        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <input class="form-control w-25" type="search" placeholder="Search...">
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar p-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Layouts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Pages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Charts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Tables</a></li>
+                </ul>
+            </nav>
+            <main class="col-md-10 ms-sm-auto px-4">
+                <h2 class="mt-4">Dashboard</h2>
+                <div class="row my-3">
+                    <div class="col-md-3"><div class="card bg-primary text-white p-3">Primary Card</div></div>
+                    <div class="col-md-3"><div class="card bg-warning text-white p-3">Warning Card</div></div>
+                    <div class="col-md-3"><div class="card bg-success text-white p-3">Success Card</div></div>
+                    <div class="col-md-3"><div class="card bg-danger text-white p-3">Danger Card</div></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="areaChart"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5 text-center">
+        
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+              // Get the canvas element
+              var ctx = document.getElementById('myChart').getContext('2d');
+
+// Create a Doughnut Chart
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow'],
+        datasets: [{
+            label: 'spach',
+            data: [30, 50, 20],
+            backgroundColor: ['#ff6384', '#36a2eb', '#ffce56'],
+            hoverOffset: 5
+        }]
+    }
+});
+          document.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [12, 19, 3, 5, 2],
+                    backgroundColor: 'black',
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+
+        var ctx1 = document.getElementById('areaChart').getContext('2d');
+        new Chart(ctx1, {     
+            type: 'line',
+            data: {
+                labels: ['Mar 1', 'Mar 3', 'Mar 5', 'Mar 7', 'Mar 9', 'Mar 11', 'Mar 13'],
+                datasets: [{ label: 'Area Chart', data: [10000, 30000, 20000, 30000, 25000, 27000, 32000], borderColor: 'blue', fill: true }]
+            }
+        });
+        
+        var ctx2 = document.getElementById('barChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                datasets: [{ label: 'Bar Chart', data: [4000, 6000, 8000, 10000, 12000, 15000], backgroundColor: 'blue' }]
+            }
+        });
+    </script>
+</body>
+</html>
